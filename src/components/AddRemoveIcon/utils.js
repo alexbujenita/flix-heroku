@@ -8,7 +8,7 @@ import axios from "axios";
 export async function addMovieToFavs(movieId, movieTitle, moviePosterPath) {
   try {
     await axios.post(
-      "http://localhost:3001/api/favs",
+      "https://whispering-savannah-88397.herokuapp.com/api/favs",
       {
         movieRefId: movieId,
         movieTitle: movieTitle,
@@ -31,7 +31,7 @@ export async function addMovieToFavs(movieId, movieTitle, moviePosterPath) {
  */
 export async function removeMovieFromFavs(movieId) {
   try {
-    await axios.delete(`http://localhost:3001/api/favs/${movieId}`, {
+    await axios.delete(`https://whispering-savannah-88397.herokuapp.com/api/favs/${movieId}`, {
       withCredentials: true,
     });
     const favs = JSON.parse(localStorage.getItem("UserFavs")).filter(

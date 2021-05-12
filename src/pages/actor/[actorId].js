@@ -80,8 +80,8 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   try {
     const [movies, actor] = await Promise.all([
-      axios.get(`http://localhost:3001/api/actor-movies/${parseInt(actorId)}`),
-      axios.get(`http://localhost:3001/api/actor-info/${parseInt(actorId)}`),
+      axios.get(`https://whispering-savannah-88397.herokuapp.com/api/actor-movies/${parseInt(actorId)}`),
+      axios.get(`https://whispering-savannah-88397.herokuapp.com/api/actor-info/${parseInt(actorId)}`),
     ]);
     return {
       props: {

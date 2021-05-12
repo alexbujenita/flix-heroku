@@ -31,7 +31,7 @@ export default function RegisterPage() {
     event.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3001/api/auth/register",
+        "https://whispering-savannah-88397.herokuapp.com/api/auth/register",
         { firstName, lastName: surname, email, password },
         { withCredentials: true }
       );
