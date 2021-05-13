@@ -12,6 +12,7 @@ export default function LogInOut({ name }) {
       });
       localStorage.clear("LOGGED");
       localStorage.clear("UserFavs");
+      localStorage.removeItem("JWT_TOKEN");
       router.push("/movies");
     } catch (error) {
       console.log(error);

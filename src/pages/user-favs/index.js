@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import Head from "next/head";
 import { useState } from "react";
 import MovieCard from "../../components/MovieCard/MovieCard";
@@ -9,10 +10,16 @@ export default function UserFavs(props) {
 
   async function downloadFavsAsPdf() {
     setInProgress(true);
-    const { data } = await axios.get("https://arcane-lowlands-53007.herokuapp.com/api/favs/pdf", {
-      withCredentials: true,
-      responseType: "blob",
-    });
+    const { data } = await axios.get(
+      "https://arcane-lowlands-53007.herokuapp.com/api/favs/pdf",
+      {
+        withCredentials: true,
+        headers: {
+          "x-api-token": localStorage.getItem("JWT_TOKEN"),
+        },
+        responseType: "blob",
+      }
+    );
     const url = URL.createObjectURL(new Blob([data]));
     const link = document.createElement("a");
     link.href = url;
@@ -59,19 +66,12 @@ export default function UserFavs(props) {
 }
 
 export async function getServerSideProps(ctx) {
-  console.log(ctx.req.headers.cookie)
-  if (!ctx.req.headers.cookie) {
-    return {
-      notFound: true,
-    };
-  }
   try {
+    const token = ctx.req.headers.cookie.match(/JWT_TOKEN=(.*?);/s)[1];
     const { data } = await axios.get(
       "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs",
       {
-        headers: {
-          Cookie: ctx.req.headers.cookie || "",
-        },
+        headers: { "x-api-token": token },
         withCredentials: true,
       }
     );

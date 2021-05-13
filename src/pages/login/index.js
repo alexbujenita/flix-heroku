@@ -3,6 +3,7 @@ import Head from "next/head";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "./Login.module.scss";
+import Cookies from "js-cookie";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
@@ -20,18 +21,26 @@ export default function Login(props) {
     event.preventDefault();
     try {
       const {
-        data: { firstName },
+        data: { firstName, jwt },
       } = await axios.post(
         "https://arcane-lowlands-53007.herokuapp.com/api/auth/login",
         { email, password },
         { withCredentials: true }
       );
       localStorage.setItem("LOGGED", firstName);
+      localStorage.setItem("JWT_TOKEN", jwt);
+      Cookies.set("JWT_TOKEN", jwt);
       const {
         data: { UserFavourites },
-      } = await axios.get("https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs", {
-        withCredentials: true,
-      });
+      } = await axios.get(
+        "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs",
+        {
+          withCredentials: true,
+          headers: {
+            "x-api-token": localStorage.getItem("JWT_TOKEN"),
+          },
+        }
+      );
       if (UserFavourites.length) {
         const movieIds = UserFavourites.map((fav) => fav.movieRefId);
         localStorage.setItem("UserFavs", JSON.stringify(movieIds));
@@ -39,11 +48,14 @@ export default function Login(props) {
         localStorage.setItem("UserFavs", JSON.stringify([]));
       }
       router.push(localStorage.getItem("previousMovie") ?? "/movies");
-      localStorage.removeItem("previousMovie")
     } catch (e) {
       console.log(e);
       localStorage.removeItem("LOGGED");
+      localStorage.removeItem("JWT_TOKEN");
+      localStorage.removeItem("UserFavs");
       alert("SOMETHING WRONG");
+    } finally {
+      localStorage.removeItem("previousMovie");
     }
   };
   return (

@@ -5,5 +5,5 @@ import Cookies from "js-cookie";
  * @return {string} - the cookie
  */
 export default function isLogged() {
-  return Boolean(Cookies.get("JWT_TOKEN_MY_FLIX"));
+  return Boolean(localStorage.getItem("JWT_TOKEN"));
 }

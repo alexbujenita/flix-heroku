@@ -14,7 +14,7 @@ export async function addMovieToFavs(movieId, movieTitle, moviePosterPath) {
         movieTitle: movieTitle,
         moviePosterPath: moviePosterPath || "",
       },
-      { withCredentials: true }
+      { withCredentials: true, headers: {"x-api-token": localStorage.getItem("JWT_TOKEN")} }
     );
     const favs = JSON.parse(localStorage.getItem("UserFavs"));
     favs.push(movieId);
@@ -33,6 +33,7 @@ export async function removeMovieFromFavs(movieId) {
   try {
     await axios.delete(`https://arcane-lowlands-53007.herokuapp.com/api/favs/${movieId}`, {
       withCredentials: true,
+      headers: {"x-api-token": localStorage.getItem("JWT_TOKEN")}
     });
     const favs = JSON.parse(localStorage.getItem("UserFavs")).filter(
       (id) => id !== movieId
