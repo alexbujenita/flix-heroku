@@ -22,14 +22,14 @@ export default function Login(props) {
       const {
         data: { firstName },
       } = await axios.post(
-        "https://whispering-savannah-88397.herokuapp.com/api/auth/login",
+        "https://arcane-lowlands-53007.herokuapp.com/api/auth/login",
         { email, password },
         { withCredentials: true }
       );
       localStorage.setItem("LOGGED", firstName);
       const {
         data: { UserFavourites },
-      } = await axios.get("https://whispering-savannah-88397.herokuapp.com/api/favs/user-favs", {
+      } = await axios.get("https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs", {
         withCredentials: true,
       });
       if (UserFavourites.length) {

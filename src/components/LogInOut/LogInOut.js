@@ -7,7 +7,7 @@ export default function LogInOut({ name }) {
   const router = useRouter();
   async function logoutUser() {
     try {
-      await axios.delete("https://whispering-savannah-88397.herokuapp.com/api/auth/logout", {
+      await axios.delete("https://arcane-lowlands-53007.herokuapp.com/api/auth/logout", {
         withCredentials: true,
       });
       localStorage.clear("LOGGED");

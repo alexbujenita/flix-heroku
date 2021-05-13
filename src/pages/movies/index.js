@@ -32,7 +32,7 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   try {
     const { data } = await axios.get(
-      `https://whispering-savannah-88397.herokuapp.com/api/movies?page=${
+      `https://arcane-lowlands-53007.herokuapp.com/api/movies?page=${
         page < 1 || page > 500 ? 1 : page
       }`,
       { withCredentials: true }

@@ -90,9 +90,9 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   try {
     const [movie, credits, trailers] = await Promise.all([
-      axios.get(`https://whispering-savannah-88397.herokuapp.com/api/movie/${parseInt(movieId)}`),
-      axios.get(`https://whispering-savannah-88397.herokuapp.com/api/credits/${parseInt(movieId)}`),
-      axios.get(`https://whispering-savannah-88397.herokuapp.com/api/trailers/${parseInt(movieId)}`),
+      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/movie/${parseInt(movieId)}`),
+      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/credits/${parseInt(movieId)}`),
+      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/trailers/${parseInt(movieId)}`),
     ]);
     return {
       props: {

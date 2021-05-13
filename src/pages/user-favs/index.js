@@ -9,7 +9,7 @@ export default function UserFavs(props) {
 
   async function downloadFavsAsPdf() {
     setInProgress(true);
-    const { data } = await axios.get("https://whispering-savannah-88397.herokuapp.com/api/favs/pdf", {
+    const { data } = await axios.get("https://arcane-lowlands-53007.herokuapp.com/api/favs/pdf", {
       withCredentials: true,
       responseType: "blob",
     });
@@ -67,7 +67,7 @@ export async function getServerSideProps(ctx) {
   }
   try {
     const { data } = await axios.get(
-      "https://whispering-savannah-88397.herokuapp.com/api/favs/user-favs",
+      "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs",
       {
         headers: {
           Cookie: ctx.req.headers.cookie || "",

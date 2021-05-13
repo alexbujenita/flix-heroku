@@ -11,7 +11,7 @@ export default function RandomMovies({ data }) {
   async function refreshMovies() {
     setBtnDisable(true);
     const { data: newMovies } = await axios.get(
-      "https://whispering-savannah-88397.herokuapp.com/api/random"
+      "https://arcane-lowlands-53007.herokuapp.com/api/random"
     );
     setMovies(newMovies);
     setBtnDisable(false);
@@ -43,7 +43,7 @@ export default function RandomMovies({ data }) {
 // Trying static page
 export async function getStaticProps() {
   try {
-    const { data } = await axios.get("https://whispering-savannah-88397.herokuapp.com/api/random");
+    const { data } = await axios.get("https://arcane-lowlands-53007.herokuapp.com/api/random");
     return {
       props: { data }, // https://github.com/vercel/next.js/issues/11993#issuecomment-727170741
     };

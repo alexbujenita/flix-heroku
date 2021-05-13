@@ -31,7 +31,7 @@ export default function RegisterPage() {
     event.preventDefault();
     try {
       await axios.post(
-        "https://whispering-savannah-88397.herokuapp.com/api/auth/register",
+        "https://arcane-lowlands-53007.herokuapp.com/api/auth/register",
         { firstName, lastName: surname, email, password },
         { withCredentials: true }
       );

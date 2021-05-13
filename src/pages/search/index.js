@@ -57,7 +57,7 @@ export async function getServerSideProps(ctx) {
   const normalizedSearch = searchTerm.trim().toLowerCase();
   try {
     const { data } = await axios.get(
-      `https://whispering-savannah-88397.herokuapp.com/api/search/${entity}?searchTerm=${normalizedSearch}&pageNum=${page}&includeAdult=${includeAdult}`
+      `https://arcane-lowlands-53007.herokuapp.com/api/search/${entity}?searchTerm=${normalizedSearch}&pageNum=${page}&includeAdult=${includeAdult}`
     );
     return {
       props: {
