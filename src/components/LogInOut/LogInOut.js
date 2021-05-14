@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
 import styles from "./LogInOut.module.scss";
+import Cookies from "js-cookie";
 
 export default function LogInOut({ name }) {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function LogInOut({ name }) {
       localStorage.clear("LOGGED");
       localStorage.clear("UserFavs");
       localStorage.removeItem("JWT_TOKEN");
+      Cookies.remove("JWT_TOKEN");
       router.push("/movies");
     } catch (error) {
       console.log(error);

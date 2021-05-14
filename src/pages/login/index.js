@@ -24,12 +24,10 @@ export default function Login(props) {
         data: { firstName, jwt },
       } = await axios.post(
         "https://arcane-lowlands-53007.herokuapp.com/api/auth/login",
-        { email, password },
-        { withCredentials: true }
+        { email, password }
       );
       localStorage.setItem("LOGGED", firstName);
-      localStorage.setItem("JWT_TOKEN", jwt);
-      Cookies.set("JWT_TOKEN", jwt);
+      Cookies.set("JWT_TOKEN", jwt, { expires: 2 });
       const {
         data: { UserFavourites },
       } = await axios.get(
@@ -37,7 +35,7 @@ export default function Login(props) {
         {
           withCredentials: true,
           headers: {
-            "x-api-token": localStorage.getItem("JWT_TOKEN"),
+            "x-api-token": Cookies.get("JWT_TOKEN"),
           },
         }
       );
@@ -51,7 +49,6 @@ export default function Login(props) {
     } catch (e) {
       console.log(e);
       localStorage.removeItem("LOGGED");
-      localStorage.removeItem("JWT_TOKEN");
       localStorage.removeItem("UserFavs");
       alert("SOMETHING WRONG");
     } finally {

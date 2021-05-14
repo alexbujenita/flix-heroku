@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 /**
  * Adds the movie to the DB as the current user's fav
  * @param {Number} movieId
@@ -14,7 +15,7 @@ export async function addMovieToFavs(movieId, movieTitle, moviePosterPath) {
         movieTitle: movieTitle,
         moviePosterPath: moviePosterPath || "",
       },
-      { withCredentials: true, headers: {"x-api-token": localStorage.getItem("JWT_TOKEN")} }
+      { withCredentials: true, headers: {"x-api-token": Cookies.get("JWT_TOKEN")} }
     );
     const favs = JSON.parse(localStorage.getItem("UserFavs"));
     favs.push(movieId);
@@ -33,7 +34,7 @@ export async function removeMovieFromFavs(movieId) {
   try {
     await axios.delete(`https://arcane-lowlands-53007.herokuapp.com/api/favs/${movieId}`, {
       withCredentials: true,
-      headers: {"x-api-token": localStorage.getItem("JWT_TOKEN")}
+      headers: {"x-api-token": Cookies.get("JWT_TOKEN")}
     });
     const favs = JSON.parse(localStorage.getItem("UserFavs")).filter(
       (id) => id !== movieId

@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import Head from "next/head";
 import { useState } from "react";
 import MovieCard from "../../components/MovieCard/MovieCard";
+import { cookieParser } from "../../utils/cookieParser/cookieParser";
 import styles from "./userFavs.module.scss";
 
 export default function UserFavs(props) {
@@ -13,9 +14,8 @@ export default function UserFavs(props) {
     const { data } = await axios.get(
       "https://arcane-lowlands-53007.herokuapp.com/api/favs/pdf",
       {
-        withCredentials: true,
         headers: {
-          "x-api-token": localStorage.getItem("JWT_TOKEN"),
+          "x-api-token": Cookies.get("JWT_TOKEN"),
         },
         responseType: "blob",
       }
@@ -67,12 +67,11 @@ export default function UserFavs(props) {
 
 export async function getServerSideProps(ctx) {
   try {
-    const token = ctx.req.headers.cookie.match(/JWT_TOKEN=(.*?);/s)[1];
+    const { JWT_TOKEN } = cookieParser(ctx.req.headers.cookie);
     const { data } = await axios.get(
       "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs",
       {
-        headers: { "x-api-token": token },
-        withCredentials: true,
+        headers: { "x-api-token": JWT_TOKEN },
       }
     );
     return {
