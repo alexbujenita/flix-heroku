@@ -30,7 +30,6 @@ export default function Movie(props) {
         }
       );
       if(data) {
-        console.log(data);
         setIsFav(true)
         setSeen(data.seen)
       }
