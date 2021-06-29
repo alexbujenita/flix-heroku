@@ -9,6 +9,7 @@ import MarkSeenUnseen from "../../components/MarkSeenUnseen/MarkSeenUnseen";
 import PersonCard from "../../components/PersonCard/PersonCard";
 import Trailers from "../../components/Trailers/Trailers";
 import styles from "./Movie.module.scss";
+import Cookies from "js-cookie";
 
 export default function Movie(props) {
   const { credits, movie, trailers } = props;
@@ -21,7 +22,12 @@ export default function Movie(props) {
     const getPossibleFav = async () => {
       const { data } = await axios.get(
         `https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs/${parseInt(movie.id)}`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            "x-api-token": Cookies.get("JWT_TOKEN"),
+          },
+        }
       );
       if(data) {
         console.log(data);

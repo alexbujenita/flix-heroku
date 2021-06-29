@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import styles from "./MarkSeenUnseen.module.scss";
 
 export default function MarkSeenUnseen(props) {
@@ -9,7 +10,12 @@ export default function MarkSeenUnseen(props) {
       await axios.patch(
         `https://arcane-lowlands-53007.herokuapp.com/api/favs/${movie.id}`,
         { seen: "change!" },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            "x-api-token": Cookies.get("JWT_TOKEN"),
+          },
+        }
       );
       if (unseen) {
         setSeen(false);
