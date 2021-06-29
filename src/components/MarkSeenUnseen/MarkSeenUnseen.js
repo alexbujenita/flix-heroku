@@ -7,7 +7,7 @@ export default function MarkSeenUnseen(props) {
   const mark = (unseen) => async () => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/favs/${movie.id}`,
+        `https://arcane-lowlands-53007.herokuapp.com/api/favs/${movie.id}`,
         { seen: "change!" },
         { withCredentials: true }
       );
