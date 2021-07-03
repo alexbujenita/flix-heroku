@@ -87,7 +87,7 @@ export default function UserFavs(props) {
       <div className={styles.moviesContainer}>
         {props.UserFavourites.filter(filterWatched).map((m) => (
           <MovieCard
-            key={m.id}
+            key={m.movieRefId}
             poster_path={m.moviePosterPath}
             title={m.movieTitle}
             id={m.movieRefId}

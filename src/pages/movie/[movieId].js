@@ -12,7 +12,8 @@ import styles from "./Movie.module.scss";
 import Cookies from "js-cookie";
 
 export default function Movie(props) {
-  const { credits, movie, trailers } = props;
+  const { movie } = props;
+  const { credits, videos: trailers } = movie;
   const [isFav, setIsFav] = useState(false);
   const [seen, setSeen] = useState(false);
   const [displayCast, setDisplayCast] = useState(false);
@@ -21,7 +22,9 @@ export default function Movie(props) {
   useEffect(() => {
     const getPossibleFav = async () => {
       const { data } = await axios.get(
-        `https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs/${parseInt(movie.id)}`,
+        `https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs/${parseInt(
+          movie.id
+        )}`,
         {
           withCredentials: true,
           headers: {
@@ -29,14 +32,13 @@ export default function Movie(props) {
           },
         }
       );
-      if(data) {
-        setIsFav(true)
-        setSeen(data.seen)
+      if (data) {
+        setIsFav(true);
+        setSeen(data.seen);
       }
     };
     isLogged() && getPossibleFav();
   }, [movie.id]);
-
 
   return (
     <>
@@ -115,16 +117,14 @@ export async function getServerSideProps(ctx) {
     params: { movieId },
   } = ctx;
   try {
-    const [movie, credits, trailers] = await Promise.all([
-      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/movie/${parseInt(movieId)}`),
-      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/credits/${parseInt(movieId)}`),
-      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/trailers/${parseInt(movieId)}`),
-    ]);
+    const { data } = await axios.get(
+      `https://arcane-lowlands-53007.herokuapp.com/api/movie/${parseInt(
+        movieId
+      )}/include-all`
+    );
     return {
       props: {
-        movie: movie.data,
-        credits: credits.data,
-        trailers: trailers.data,
+        movie: data,
       },
     };
   } catch (error) {
