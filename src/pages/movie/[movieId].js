@@ -56,7 +56,8 @@ export default function Movie(props) {
       </Head>
       <div className={styles.movieIntroContainer}>
         {poster_path ? (
-          <Image
+          <img
+            loading="lazy"
             src={`https://image.tmdb.org/t/p/w185${poster_path}`}
             alt={title}
             width={185}

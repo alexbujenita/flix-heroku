@@ -19,6 +19,10 @@
   position: relative;
 }
 
+.imgLink {
+  display: inline-flex;
+}
+
 .personImageContainer > div {
   border-radius: 5%;
   box-shadow: 3px 0 5px 4px $box-shadow-1;

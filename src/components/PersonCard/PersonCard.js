@@ -22,8 +22,9 @@ function PersonCard({
     >
       <Link href={`/actor/${id}`} passHref>
         <div className={styles.personImageContainer}>
-          <a>
-            <Image
+          <a className={styles.imgLink}>
+            <img
+              loading="lazy"
               src={
                 profile_path
                   ? `https://image.tmdb.org/t/p/w342${profile_path}`

@@ -41,7 +41,8 @@ export default function ActorInfo({ movies, actor }) {
       <div className={styles.infoContainer}>
         {actor.profile_path ? (
           <div className={styles.imageContainer}>
-            <Image
+            <img
+              loading="lazy"
               src={`https://image.tmdb.org/t/p/w342${actor.profile_path}`}
               alt={actor.name}
               width={parseInt(342 / 1.4)}
@@ -80,8 +81,16 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   try {
     const [movies, actor] = await Promise.all([
-      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/actor-movies/${parseInt(actorId)}`),
-      axios.get(`https://arcane-lowlands-53007.herokuapp.com/api/actor-info/${parseInt(actorId)}`),
+      axios.get(
+        `https://arcane-lowlands-53007.herokuapp.com/api/actor-movies/${parseInt(
+          actorId
+        )}`
+      ),
+      axios.get(
+        `https://arcane-lowlands-53007.herokuapp.com/api/actor-info/${parseInt(
+          actorId
+        )}`
+      ),
     ]);
     return {
       props: {

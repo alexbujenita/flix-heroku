@@ -12,7 +12,8 @@ export default function MovieCard(props) {
       <Link href={`/movie/${id}`}>
         <a>
           <div className={styles.movieCardImage}>
-            <Image
+            <img
+              loading="lazy"
               src={
                 poster_path
                   ? `https://image.tmdb.org/t/p/w342${poster_path}`
