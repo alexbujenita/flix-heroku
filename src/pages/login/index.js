@@ -29,9 +29,9 @@ export default function Login(props) {
       localStorage.setItem("LOGGED", firstName);
       Cookies.set("JWT_TOKEN", jwt, { expires: 2 });
       const {
-        data: { UserFavourites },
+        data,
       } = await axios.get(
-        "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs",
+        "https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs?all=true",
         {
           withCredentials: true,
           headers: {
@@ -39,8 +39,10 @@ export default function Login(props) {
           },
         }
       );
-      if (UserFavourites.length) {
-        const movieIds = UserFavourites.map((fav) => fav.movieRefId);
+      if (data.rows?.[0]?.UserFavourites.length) {
+        const movieIds = data.rows[0].UserFavourites.map(
+          (fav) => fav.movieRefId
+        );
         localStorage.setItem("UserFavs", JSON.stringify(movieIds));
       } else {
         localStorage.setItem("UserFavs", JSON.stringify([]));
