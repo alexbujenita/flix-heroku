@@ -11,12 +11,25 @@ import styles from "./userFavs.module.scss";
 
 export default function UserFavs(props) {
   const [inProgress, setInProgress] = useState(false);
+  const [searchFav, setSearchFav] = useState("");
   const { page, totalPages, rows } = props;
-  const { query } = useRouter();
+  const router = useRouter();
+  const { query } = router;
 
   if (!rows.length) {
     return <h1>Nothing here...</h1>;
   }
+
+  const setSearchHandler = ({ target: { value } }) => {
+    setSearchFav(value);
+  };
+
+  const searchInFavs = (event) => {
+    if (event.key === "Enter" && !!searchFav) {
+      setSearchFav("");
+      router.push(`/user-favs?page=1&searchQuery=${searchFav}`);
+    }
+  };
 
   const nextPage = page >= totalPages ? page : page + 1;
   const prevPage = page <= 1 ? 1 : page - 1;
@@ -54,7 +67,7 @@ export default function UserFavs(props) {
       <div className={styles.downloadContainer}>
         {inProgress ? (
           <>
-            <h3>Please wait while for the file to download.</h3>
+            <h3>Please wait for the file to download.</h3>
             <h3>Usually a minute for 50 movies.</h3>
           </>
         ) : (
@@ -70,6 +83,14 @@ export default function UserFavs(props) {
         >
           <a className={query.seen === "true" ? styles.active : ""}>SEEN</a>
         </Link>
+        <input
+          className={styles.favSearch}
+          type="text"
+          placeholder="Search your favs"
+          value={searchFav}
+          onChange={setSearchHandler}
+          onKeyDown={searchInFavs}
+        />
         <Link
           passHref
           href={`/user-favs?page=1${
@@ -92,12 +113,16 @@ export default function UserFavs(props) {
         ))}
       </div>
       <BottomNav
-        prev={`/user-favs?page=${prevPage}${
-          query.seen ? `&seen=${query.seen}` : ""
-        }`}
-        next={`/user-favs?page=${nextPage}${
-          query.seen ? `&seen=${query.seen}` : ""
-        }`}
+        prev={
+          `/user-favs?page=${prevPage}${
+            query.seen ? `&seen=${query.seen}` : ""
+          }` + (query.searchQuery ? `&searchQuery=${query.searchQuery}` : "")
+        }
+        next={
+          `/user-favs?page=${nextPage}${
+            query.seen ? `&seen=${query.seen}` : ""
+          }` + (query.searchQuery ? `&searchQuery=${query.searchQuery}` : "")
+        }
       />
     </>
   );
@@ -107,10 +132,11 @@ export async function getServerSideProps(ctx) {
   try {
     const { JWT_TOKEN } = cookieParser(ctx.req.headers.cookie);
     const {
-      query: { page = 1, seen = "" },
+      query: { page = 1, seen = "", searchQuery },
     } = ctx;
     const { data } = await axios.get(
-      `https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs?page=${page}&seen=${seen}`,
+      `https://arcane-lowlands-53007.herokuapp.com/api/favs/user-favs?page=${page}&seen=${seen}` +
+        (searchQuery ? `&searchQuery=${searchQuery}` : ""),
       {
         headers: { "x-api-token": JWT_TOKEN },
       }
