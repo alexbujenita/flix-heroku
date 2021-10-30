@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
 import styles from "./PersonCard.module.scss";
-import PropTypes from "prop-types";
 
 function PersonCard({
   id,
@@ -53,14 +51,5 @@ function PersonCard({
     </div>
   );
 }
-
-PersonCard.propTypes = {
-  id: PropTypes.number.isRequired,
-  fromSearch: PropTypes.bool,
-  profile_path: PropTypes.string,
-  original_name: PropTypes.string,
-  name: PropTypes.string,
-  character: PropTypes.string,
-};
 
 export default PersonCard;

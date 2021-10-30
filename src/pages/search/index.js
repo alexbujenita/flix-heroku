@@ -1,8 +1,7 @@
-import PropTypes from "prop-types";
 import axios from "axios";
-import MovieCard from "../../components/MovieCard/MovieCard";
-import styles from "./Search.module.scss";
 import Head from "next/head";
+import styles from "./Search.module.scss";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import BottomNav from "../../components/BottomNav/BottomNav";
 import PersonCard from "../../components/PersonCard/PersonCard";
 
@@ -40,15 +39,6 @@ export default function Search({ data, searchOpt }) {
     </h1>
   );
 }
-
-Search.propTypes = {
-  data: PropTypes.shape({
-    page: PropTypes.number.isRequired,
-    results: PropTypes.arrayOf(PropTypes.object).isRequired,
-    total_pages: PropTypes.number.isRequired,
-    total_results: PropTypes.number.isRequired,
-  }),
-};
 
 export async function getServerSideProps(ctx) {
   const {
