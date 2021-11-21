@@ -59,7 +59,7 @@ export default function FilterMovies() {
   function yearsGenerator() {
     const years = [];
     const currentYear = new Date().getFullYear();
-    for (let year = currentYear; year > 1984; year--) {
+    for (let year = currentYear; year > 1884; year--) {
       years.push(year);
     }
     return years;
