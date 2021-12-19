@@ -42,19 +42,19 @@ export default function AdminUserInfo({ count, rows: [UserFavourites] }) {
       </h2>
       <table>
         <thead>
-          <tr
-            key={id}
-            style={{ backgroundColor: isDuplicate ? "red" : "white" }}
-          >
+          <tr>
             <td>DB ID</td>
             <td>TMDB ID</td>
             <td>TITLE</td>
           </tr>
         </thead>
         <tbody>
-          {favs.map(({ id, movieRefId, movieTitle }) => {
+          {favs.map(({ id, movieRefId, movieTitle, isDuplicate }) => {
             return (
-              <tr key={id}>
+              <tr
+                key={id}
+                style={{ backgroundColor: isDuplicate ? "red" : "white" }}
+              >
                 <td>{id}</td>
                 <td>{movieRefId}</td>
                 <td>{movieTitle}</td>
