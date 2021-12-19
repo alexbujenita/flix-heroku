@@ -9,7 +9,6 @@ export default function AdminUserInfo({ count, rows: [UserFavourites] }) {
     return async function () {
       if (!window.confirm("Delete a fav?")) return;
       try {
-        console.log(UserFavourites)
         await axios.delete(
           `https://arcane-lowlands-53007.herokuapp.com/admin/users/${UserFavourites.id}/movie/${movieId}`,
           {
@@ -24,6 +23,17 @@ export default function AdminUserInfo({ count, rows: [UserFavourites] }) {
     };
   }
 
+  const movieRefIdSet = new Set();
+
+  favs.forEach((fav) => {
+    if (movieRefIdSet.has(fav.movieRefId)) {
+      fav.isDuplicate = true;
+    }
+    movieRefIdSet.add(fav.movieRefId);
+  });
+
+  movieRefIdSet.clear();
+
   return (
     <div>
       <h2>
@@ -32,7 +42,10 @@ export default function AdminUserInfo({ count, rows: [UserFavourites] }) {
       </h2>
       <table>
         <thead>
-          <tr>
+          <tr
+            key={id}
+            style={{ backgroundColor: isDuplicate ? "red" : "white" }}
+          >
             <td>DB ID</td>
             <td>TMDB ID</td>
             <td>TITLE</td>
